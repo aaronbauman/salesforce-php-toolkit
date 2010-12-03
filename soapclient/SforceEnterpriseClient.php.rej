@@ -1,0 +1,81 @@
+***************
+*** 45,52 ****
+    /**
+     * Adds one or more new individual objects to your organization's data.
+     * @param array $sObjects    Array of one or more sObjects (up to 200) to create.
+-    * @param AssignmentRuleHeader $assignment_header is optional.  Defaults to NULL
+-    * @param MruHeader $mru_header is optional.  Defaults to NULL
+     * @return SaveResult
+     */
+    public function create($sObjects, $type) {
+--- 45,51 ----
+    /**
+     * Adds one or more new individual objects to your organization's data.
+     * @param array $sObjects    Array of one or more sObjects (up to 200) to create.
++    * @param string $type  The type of objects being created.
+     * @return SaveResult
+     */
+    public function create($sObjects, $type) {
+***************
+*** 61,66 ****
+    /**
+     * Updates one or more new individual objects to your organization's data.
+     * @param array sObjects    Array of sObjects
+     * @param AssignmentRuleHeader $assignment_header is optional.  Defaults to NULL
+     * @param MruHeader $mru_header is optional.  Defaults to NULL
+     * @return UpdateResult
+--- 60,66 ----
+    /**
+     * Updates one or more new individual objects to your organization's data.
+     * @param array sObjects    Array of sObjects
++    * @param string $type  The type of objects being updated.
+     * @param AssignmentRuleHeader $assignment_header is optional.  Defaults to NULL
+     * @param MruHeader $mru_header is optional.  Defaults to NULL
+     * @return UpdateResult
+***************
+*** 81,93 ****
+     *
+     * @param string $ext_Id        External Id
+     * @param array  $sObjects  Array of sObjects
+     * @return UpsertResult
+     */
+-   public function upsert($ext_Id, $sObjects) {
+      $arg = new stdClass;
+      $arg->externalIDFieldName = new SoapVar($ext_Id, XSD_STRING, 'string', 'http://www.w3.org/2001/XMLSchema');
+      foreach ($sObjects as &$sObject) {
+-       $sObject = new SoapVar($sObject, SOAP_ENC_OBJECT, 'Contact', $this->namespace);
+      }
+      $arg->sObjects = $sObjects;
+      return parent::_upsert($arg);
+--- 81,94 ----
+     *
+     * @param string $ext_Id        External Id
+     * @param array  $sObjects  Array of sObjects
++    * @param string $type  The type of objects being upserted.
+     * @return UpsertResult
+     */
++   public function upsert($ext_Id, $sObjects, $type = 'Contact') {
+      $arg = new stdClass;
+      $arg->externalIDFieldName = new SoapVar($ext_Id, XSD_STRING, 'string', 'http://www.w3.org/2001/XMLSchema');
+      foreach ($sObjects as &$sObject) {
++       $sObject = new SoapVar($sObject, SOAP_ENC_OBJECT, $type, $this->namespace);
+      }
+      $arg->sObjects = $sObjects;
+      return parent::_upsert($arg);
+***************
+*** 97,103 ****
+     * Merge records
+     *
+     * @param stdclass $mergeRequest
+-    * @param String $type
+     * @return unknown
+     */
+    public function merge($mergeRequest, $type) {
+--- 98,104 ----
+     * Merge records
+     *
+     * @param stdclass $mergeRequest
++    * @param String $type  The type of objects being merged.
+     * @return unknown
+     */
+    public function merge($mergeRequest, $type) {
