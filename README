@@ -1,5 +1,6 @@
-This project is forked from http://wiki.developerforce.com/index.php/PHP_Toolkit
-because a wiki is not a very good version control system, nor does it lend
-itself to integration with third party apps. The primary use case for this
-project is intended to be the Drupal Salesforce Suite,
-http://drupal.org/project/salesforce
+The official Salesforce toolkit is on github now.
+This fork is no longer maintained.
+You should use that project instead!
+
+http://github.com/developerforce/Force.com-Toolkit-for-PHP
+
